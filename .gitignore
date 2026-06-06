@@ -1,0 +1,27 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.python-version
+
+# Node (au cas où)
+node_modules/
+
+# Données locales Captage
+reservoir_data/
+*.log
+
+# Éditeurs
+.vscode/
+.idea/
