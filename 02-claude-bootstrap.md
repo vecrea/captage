@@ -109,3 +109,17 @@ Puis relance le commit (ou demande à Claude de le relancer).
 Vérifie qu'il a les droits d'écriture sur le dossier.
 
 Vérifie que tu es bien dans le bon dossier : `pwd` doit pointer vers `~/Documents/captage`.
+
+### Tu (ou Claude) as lancé `/init` par erreur
+
+`/init` regénère un `CLAUDE.md` générique et écrase celui qui était préparé pour Captage.
+
+Restore-le depuis le repo :
+
+```bash
+git checkout CLAUDE.md
+```
+
+Relance ensuite le bootstrap normal (le prompt du checkpoint 2).
+
+Note : `CLAUDE.md` contient déjà l'instruction « tu ne lances jamais `/init` ». Si Claude l'a fait quand même, signale-le-lui pour qu'il ne recommence pas.

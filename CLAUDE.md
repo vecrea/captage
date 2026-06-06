@@ -12,6 +12,8 @@ Tu fais un seul changement à la fois.
 
 Tu documentes les bugs dans `JOURNAL.md`.
 
+Tu ne lances jamais `/init`. Ce fichier est déjà préparé pour Captage. Tu le complètes (section ## Environnement détecté, ## Décisions historiques), tu ne le regénères pas.
+
 ## Le projet
 
 Captage est un système qui :
