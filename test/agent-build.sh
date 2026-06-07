@@ -23,12 +23,13 @@ l'action de tri /trier protégée. Lance la page :$PORT en arrière-plan à la f
 echo "── L'agent construit (Claude Code headless) ──"
 claude -p "$PROMPT" --dangerously-skip-permissions 2>&1 | tail -60 || echo "(claude a retourné un code non nul, on vérifie quand même)"
 
-# Filet : si la page n'a pas été lancée par l'agent, on tente de la lancer.
-if ! curl -fsS "http://localhost:$PORT/" >/dev/null 2>&1; then
-  if [ -f app.py ]; then
-    ( uv run uvicorn app:app --host 127.0.0.1 --port "$PORT" >/dev/null 2>&1 & ) || true
-    for i in $(seq 1 15); do curl -fsS "http://localhost:$PORT/" >/dev/null 2>&1 && break; sleep 1; done
-  fi
+# Le serveur lancé par l'agent meurt quand `claude -p` se termine. On (re)lance
+# donc la page nous-mêmes, détachée (setsid), avant de vérifier — sinon les étapes
+# 3 et 8 ressortent en faux négatif.
+pkill -f "uvicorn.*--port $PORT" 2>/dev/null || true
+if [ -f app.py ]; then
+  setsid uv run uvicorn app:app --host 127.0.0.1 --port "$PORT" >/tmp/captage-page.log 2>&1 &
+  for i in $(seq 1 30); do curl -fsS "http://localhost:$PORT/" >/dev/null 2>&1 && break; sleep 1; done
 fi
 
 echo "── Vérification (conformance.sh) ──"
