@@ -86,16 +86,18 @@ git --version
 
 ### 5. Le repo Captage est cloné en local
 
+**Où cloner :** un dossier de dev **hors Bureau et Documents**. Sur Mac, si « iCloud Drive → Bureau et dossiers Documents » est activé (souvent par défaut), et sur Windows si OneDrive gère tes Documents, ces dossiers sont synchronisés dans le cloud : iCloud/OneDrive décharge tes fichiers en stubs, casse git et le venv Python, et envoie ton `.env` (tes secrets) sur des serveurs distants. On clone donc dans `~/dev/captage`, à la racine de ton home, jamais synchronisé. `git clone` crée le dossier `dev` au passage.
+
 Mac :
 
 ```bash
-git clone https://github.com/vecrea/captage.git ~/Documents/captage
+git clone https://github.com/vecrea/captage.git ~/dev/captage
 ```
 
 Windows :
 
 ```powershell
-git clone https://github.com/vecrea/captage.git $HOME\Documents\captage
+git clone https://github.com/vecrea/captage.git $HOME\dev\captage
 ```
 
 L'URL exacte du repo te sera fournie par ton formateur Krea, ou visible sur la page de cours dans Dojo.
@@ -105,13 +107,13 @@ L'URL exacte du repo te sera fournie par ton formateur Krea, ou visible sur la p
 Mac :
 
 ```bash
-code ~/Documents/captage
+code ~/dev/captage
 ```
 
 Windows :
 
 ```powershell
-code $HOME\Documents\captage
+code $HOME\dev\captage
 ```
 
 Une nouvelle fenêtre VS Code s'ouvre, déjà placée dans le bon dossier.
@@ -151,3 +153,16 @@ Si privé, demande l'accès.
 Mac : ouvre VS Code, lance la palette de commandes (`Cmd+Shift+P`), tape « Shell Command: Install 'code' command in PATH », valide.
 
 Windows : la commande est ajoutée automatiquement, ferme et rouvre le terminal.
+
+### Le projet est dans un dossier synchronisé (iCloud / OneDrive)
+
+Symptômes : des fichiers s'affichent avec une icône de nuage (déchargés en stubs), git renvoie des erreurs incohérentes, ou le venv Python se casse. Ton projet est sous iCloud (Bureau/Documents) ou OneDrive.
+
+Sors-le du cloud : reclone dans un dossier non synchronisé, puis jette l'ancien.
+
+```bash
+git clone https://github.com/vecrea/captage.git ~/dev/captage
+code ~/dev/captage
+```
+
+Supprime ensuite le dossier resté dans `Documents`.

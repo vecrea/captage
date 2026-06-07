@@ -65,6 +65,8 @@ CREATE TABLE items (
 
 Note le `url TEXT UNIQUE`. La dédup est dans le design, pas un rattrapage.
 
+Prérequis : **Docker Desktop installé et lancé** (icône baleine dans la barre de menus). Sans le daemon qui tourne, `docker compose` échoue. Le prompt ci-dessous demande à Claude d'installer Docker s'il manque ; à toi de **lancer l'app** ensuite.
+
 Prompt à Claude :
 
 ```
@@ -90,6 +92,10 @@ Tu dois voir la table `items`, vide.
 C'est l'écran que tu garderas ouvert pour les étapes suivantes.
 
 ## Erreurs possibles
+
+### `docker: command not found` ou « Cannot connect to the Docker daemon »
+
+Deux cas. Soit Docker Desktop n'est pas installé (`command not found`) : laisse Claude l'installer via le prompt, ou pose-le depuis https://www.docker.com/products/docker-desktop/, puis ferme et rouvre le terminal. Soit il est installé mais l'app n'est pas lancée (« Cannot connect to the daemon ») : ouvre Docker Desktop, attends qu'elle passe au vert, relance `docker compose up`. Le daemon doit tourner en fond ; ce n'est pas optionnel.
 
 ### Conteneur up mais refuse les connexions
 

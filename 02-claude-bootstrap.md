@@ -108,7 +108,7 @@ Puis relance le commit (ou demande à Claude de le relancer).
 
 Vérifie qu'il a les droits d'écriture sur le dossier.
 
-Vérifie que tu es bien dans le bon dossier : `pwd` doit pointer vers `~/Documents/captage`.
+Vérifie que tu es bien dans le bon dossier : `pwd` doit pointer vers `~/dev/captage`.
 
 ### Tu (ou Claude) as lancé `/init` par erreur
 
