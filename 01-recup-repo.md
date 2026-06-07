@@ -91,13 +91,13 @@ git --version
 Mac :
 
 ```bash
-git clone https://github.com/vecrea/captage.git ~/dev/captage
+git clone https://github.com/KreaCity/captage.git ~/dev/captage
 ```
 
 Windows :
 
 ```powershell
-git clone https://github.com/vecrea/captage.git $HOME\dev\captage
+git clone https://github.com/KreaCity/captage.git $HOME\dev\captage
 ```
 
 L'URL exacte du repo te sera fournie par ton formateur Krea, ou visible sur la page de cours dans Dojo.
@@ -161,7 +161,7 @@ Symptômes : des fichiers s'affichent avec une icône de nuage (déchargés en s
 Sors-le du cloud : reclone dans un dossier non synchronisé, puis jette l'ancien.
 
 ```bash
-git clone https://github.com/vecrea/captage.git ~/dev/captage
+git clone https://github.com/KreaCity/captage.git ~/dev/captage
 code ~/dev/captage
 ```
 
