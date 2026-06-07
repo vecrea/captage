@@ -46,9 +46,9 @@ Implémente `SourcePodcast(feed_url)`. C'est un RSS (réutilise `SourceRSS` de l
 
 Donne-lui un flux de podcast (un de tes podcasts préférés), lance la récolte sur un épisode.
 
-La preuve : retourne sur TablePlus.
+La preuve : ouvre ta page **http://localhost:3333**.
 
-Une ligne `source` = podcast, la transcription dans `contenu`, et son `verdict` qui apparaît tout seul à la passe de qualification suivante.
+Une ligne `source` = podcast, la transcription dans `contenu`, et son `verdict` qui apparaît tout seul à la passe de qualification suivante. Trois types de source, une seule page qui les montre tous.
 
 ## Erreurs possibles
 

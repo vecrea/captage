@@ -1,101 +1,59 @@
-# Étape 8 · Page de tri
+# Étape 8 · La page de tri · tu tranches
 
 ## Intention
 
-Jusqu'ici tout vit dans la base et les logs.
+Ta page existe depuis l'étape 3. Elle a grandi : elle montre les items, leur source, le verdict de l'IA. Il lui manque le geste qui compte vraiment · **toi qui tranches**.
 
-Il manque l'écran où **toi**, l'humain, tu tranches.
+L'IA a pré-trié (verdict + ordre). Mais le clic **Garder / Jeter** est le seul acte qui grave.
 
-La Page de tri montre la pile du jour (les items `etat='capté'`, avec le verdict de l'IA pour guider l'œil).
+On n'ajoute donc pas une nouvelle page. On **ajoute les actions** à celle qui tourne déjà sur `:3333`.
 
-Elle te donne deux boutons : **Garder** ou **Jeter**.
-
-C'est le moment où le partage des rôles devient tangible.
-
-L'IA a pré-trié (verdict + ordre).
-
-Mais le clic Garder / Jeter est le **seul acte qui compte**.
-
-Un item `ignorer` reste visible, relégué en bas. Jamais masqué d'office.
-
-Tu gardes la main sur ta propre mémoire.
+Un item `ignorer` reste visible, relégué en bas. Jamais masqué d'office. Tu gardes la main sur ta propre mémoire.
 
 ## Actions · Vérifications · Constatations
 
-### 1. Le serveur de tri tourne, en local sur `127.0.0.1`
+### 1. Les actions Garder / Jeter, sur ta page existante
 
 Prompt à Claude :
 
 ```
-App FastAPI : `GET /` sert une page HTML listant les items `etat='capté'` (titre, média, verdict IA, raison), triés pour que les `produire` remontent et les `ignorer` descendent (visibles, jamais masqués). Deux boutons Garder / Jeter par ligne. La pile (`GET`) est publique. L'action (`POST /trier`) derrière un login simple (basic auth, mot de passe dans `.env` sous `TRI_PASSWORD`). Sépare données et affichage : l'UI affiche ce que l'API renvoie, sans savoir si c'est la vraie pile ou une pile de démo. Installe : `uv add fastapi uvicorn`.
+Sur ma page :3333 (celle des étapes 3-5) : ajoute deux boutons Garder / Jeter par ligne, et des filtres « à trier / gardés / jetés » en haut. Trie pour que les `produire` remontent et les `ignorer` descendent (visibles, jamais masqués). « Garder » → `etat='gardé'`, « Jeter » → `etat='jeté'` dans le Réservoir. La pile (`GET`) reste publique ; l'action (`POST /trier`) passe derrière un login simple (basic auth, mot de passe dans `.env` sous `TRI_PASSWORD`). Garde la séparation données/affichage : l'UI affiche ce que l'API renvoie.
 ```
 
-Lance le serveur :
+Rappel · ta page tourne sur **:3333** :
 
 ```bash
-uv run uvicorn app:app --host 127.0.0.1 --port 8000
+uv run uvicorn app:app --host 127.0.0.1 --port 3333
 ```
 
-Par défaut on écoute sur `127.0.0.1`. La page n'est accessible que depuis ta machine.
+Par défaut on écoute sur `127.0.0.1` · la page n'est visible que depuis ta machine. C'est le bon défaut · une page de tri n'a aucune raison d'être ouverte au monde.
 
-C'est le bon défaut. Une page de tri n'a aucune raison d'être ouverte au monde.
+### 2. Tu tranches · Garder/Jeter change l'`etat`
 
-**Besoin de trier depuis ton téléphone, sur le même wifi ?**
+Va sur **http://localhost:3333**. Tu vois la pile, verdicts en couleur. Clique Garder ou Jeter sur quelques lignes.
 
-Là seulement, passe l'hôte à `0.0.0.0` : `--host 0.0.0.0`.
+La preuve : la ligne change d'`etat` (`gardé` ou `jeté`) · visible dans ta page (via le filtre) et dans TablePlus si tu veux vérifier sous le capot.
 
-La page devient visible par toutes les machines du réseau local.
+Tu pilotes ta mémoire, d'un clic. L'IA a dégrossi, mais le geste est à toi.
 
-À n'utiliser que sur un réseau de confiance. Jamais sur un wifi public (café, coworking).
+### (Optionnel) Trier depuis ton téléphone, sur le même wifi
 
-Sur ta machine, reste sur `127.0.0.1`.
-
-### 2. Tu tranches · Garder/Jeter change l'`etat` en base
-
-C'est ton geste à toi, le seul qui grave.
-
-L'IA a pré-trié, mais le clic compte.
-
-Va sur `http://127.0.0.1:8000`.
-
-Tu vois la pile, verdicts en couleur.
-
-Clique Garder ou Jeter sur quelques lignes.
-
-La preuve : va vérifier sur TablePlus.
-
-L'`etat` de la ligne a changé (passé en `gardé` ou `jeté`).
-
-Tu pilotes ta mémoire, d'un clic.
+Besoin de trier depuis ton tél ? Passe l'hôte à `0.0.0.0` (`--host 0.0.0.0`) · la page devient visible par les machines du réseau local. À n'utiliser que sur un **réseau de confiance**, jamais un wifi public (café, coworking). Sur ta machine, reste sur `127.0.0.1`.
 
 ## Erreurs possibles
 
 ### Page vide
 
-Vérifie que l'API renvoie des items.
-
-Réservoir up ? Filtre `etat='capté'` correct ?
-
-Lance un `SELECT COUNT(*) FROM items WHERE etat='capté'` dans TablePlus pour confirmer.
-
-### `uvicorn` introuvable
-
-Lance via `uv run uvicorn ...` pour qu'il tourne dans l'environnement du projet.
-
-Vérifie que `fastapi` et `uvicorn` sont bien ajoutés : `uv add fastapi uvicorn`.
+Vérifie que l'API renvoie des items. Réservoir up ? Filtre `etat='capté'` correct ? Lance `SELECT COUNT(*) FROM items WHERE etat='capté'` dans TablePlus pour confirmer.
 
 ### Les boutons Garder / Jeter ne font rien
 
-Ouvre la console du navigateur (F12) et regarde les erreurs.
-
-Regarde les logs du serveur dans le terminal.
-
-Vérifie la route `POST /trier` côté serveur, et que l'auth est bien passée.
+Ouvre la console du navigateur (F12) et regarde les erreurs. Regarde les logs du serveur dans le terminal. Vérifie la route `POST /trier` et que l'auth est bien passée.
 
 ### Tout le monde peut trier (pas d'auth)
 
-Sépare « pile publique » (GET) et « action » (POST) dès le début.
+Sépare « pile publique » (GET) et « action » (POST) dès le début. Protège le POST avec basic auth, mot de passe dans `.env` sous `TRI_PASSWORD`. Ne committe jamais ce mot de passe.
 
-Protège le POST avec basic auth, mot de passe dans `.env` sous `TRI_PASSWORD`.
+### Le port 3333 est déjà pris
 
-Ne committe jamais ce mot de passe.
+Un autre process écoute sur 3333. Arrête-le, ou change le port (`--port 3334`) et note-le dans `.env` (`PORT`). Reteste.

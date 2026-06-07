@@ -45,9 +45,9 @@ Implémente `SourceImage(chemin)`, suit l'interface `Source` (étape 4) et la m�
 
 Donne-lui un screenshot ou un PDF, lance la récolte.
 
-La preuve : retourne sur TablePlus.
+La preuve : ouvre ta page **http://localhost:3333**.
 
-Une nouvelle ligne, `source` = image, avec le texte extrait dans `contenu`.
+Une nouvelle ligne, `source` = image, avec le texte extrait dans `contenu`, dans la même liste que le reste.
 
 Et comme la passe de qualification (étape 5) tourne sur tout item `etat='capté'`, elle jugera cette ligne sans une seule modification.
 

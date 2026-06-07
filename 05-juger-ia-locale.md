@@ -93,11 +93,15 @@ Prompt à Claude (la passe de qualification, agnostique de la source) :
 Écris une passe de qualification : pour chaque item du Réservoir où `etat='capté'`, appelle `juger(contenu)` et écris le `verdict` et la `raison` dans sa ligne. Idempotente : relançable sans re-juger ce qui a déjà un verdict. Logue les ratés dans `JOURNAL.md`.
 ```
 
-La preuve : retourne sur TablePlus.
+Puis fais remonter le verdict dans ta page :
 
-Les colonnes `verdict` et `raison` se remplissent.
+```
+Sur ma page :3333, ajoute une colonne « verdict » : une pastille couleur par item (vert = produire, gris = ignorer, orange = peut-être), avec la raison en infobulle.
+```
 
-Le Réservoir n'est plus une pile muette. Il est pré-trié.
+La preuve : ouvre **http://localhost:3333**. Chaque item porte maintenant sa pastille de verdict. (Sous le capot, les colonnes `verdict` et `raison` se sont remplies dans la table — vérifiable dans TablePlus.)
+
+Le Réservoir n'est plus une pile muette. Il est pré-trié, et ça se voit dans ta page.
 
 ## Erreurs possibles
 
