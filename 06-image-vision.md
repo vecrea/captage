@@ -1,4 +1,4 @@
-# Étape 6 · Module Image (Vision)
+# Étape 6 · Module 2 Image (Vision)
 
 ## Intention
 

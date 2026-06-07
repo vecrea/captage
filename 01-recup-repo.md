@@ -1,4 +1,4 @@
-# Étape 1 · Récupérer le repo dans VS Code
+# Étape 1 · Atelier & repo
 
 ## Intention
 

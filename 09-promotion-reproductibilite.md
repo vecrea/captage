@@ -1,4 +1,4 @@
-# Étape 9 · Promotion + relevé quotidien + run from scratch
+# Étape 9 · Ajout au CKM & Touches finales
 
 ## Intention
 

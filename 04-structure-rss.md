@@ -1,4 +1,4 @@
-# Étape 4 · Structure commune + premières sources · ta page s'allume
+# Étape 4 · Interface & Module 1 Texte (RSS)
 
 ## Intention
 

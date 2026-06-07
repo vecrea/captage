@@ -1,4 +1,4 @@
-# Étape 7 · Module Son (Whisper)
+# Étape 7 · Module 3 Son (Whisper)
 
 ## Intention
 

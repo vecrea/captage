@@ -1,4 +1,4 @@
-# Étape 2 · Installer Claude Code et bootstrapper le projet
+# Étape 2 · Claude Code & bootstrap
 
 ## Intention
 

@@ -1,4 +1,4 @@
-# Étape 8 · La page de tri · tu tranches
+# Étape 8 · Interface de tri manuel
 
 ## Intention
 

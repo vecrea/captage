@@ -1,4 +1,4 @@
-# Étape 5 · IA locale + juger() + qualification
+# Étape 5 · IA Locale & Filtre automatique
 
 ## Intention
 
