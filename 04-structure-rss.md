@@ -121,3 +121,7 @@ Certaines pages sont du JS pur (rien dans le HTML brut). `trafilatura` fait au m
 ### `uv: command not found`
 
 Installe-le : `brew install uv` (Mac) ou `winget install astral-sh.uv` (Windows). Ferme et rouvre le terminal.
+
+### Une dépendance refuse de s'installer (« no wheel », build qui échoue)
+
+Souvent un **Python trop récent** (les libs n'ont pas encore de version compilée pour). Épingle une version stable : `uv python pin 3.12`, puis relance l'install.

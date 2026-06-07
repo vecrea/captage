@@ -42,6 +42,8 @@ Mac :
 brew install --cask ollama
 ```
 
+⚠️ Bien **`--cask`** (l'app). La formule simple `brew install ollama` est cassée : il lui manque le moteur d'inférence `llama-server`, et tu te prends une erreur 500 sur chaque appel.
+
 Windows :
 
 ```powershell
@@ -84,7 +86,7 @@ Mets à jour `CLAUDE.md` à la section ## Environnement détecté : « Ollama : 
 Prompt à Claude (la fonction `juger()`) :
 
 ```
-Écris `juger(texte) -> {verdict, raison}` : lis le nom du modèle depuis `.env` (`OLLAMA_MODEL`), appelle Ollama en local sur 11434, force `format: json`, parse défensivement. Renvoie un verdict parmi `produire`, `ignorer`, `peut-être`. Si le JSON est invalide : retente une fois, sinon renvoie `{verdict: "peut-être", raison: "json invalide"}`.
+Écris `juger(texte) -> {verdict, raison}` : lis le nom du modèle depuis `.env` (`OLLAMA_MODEL`), appelle Ollama en local sur 11434, force `format: json`, parse défensivement. Le verdict doit être **exactement** l'un de ces trois mots : `produire`, `ignorer`, `peut-être` — dis-le explicitement dans le prompt envoyé au modèle (sinon il répond « Analyser », « Oui »… et ton parsing rabat tout en `peut-être`). Si le JSON est invalide : retente une fois, sinon renvoie `{verdict: "peut-être", raison: "json invalide"}`.
 ```
 
 Prompt à Claude (la passe de qualification, agnostique de la source) :
@@ -124,6 +126,14 @@ Toujours KO : réinstalle Ollama, puis relance.
 Force le format dans le prompt (déjà fait avec `format: json`) et parse défensivement.
 
 Au besoin, baisse la `temperature` à 0 et répète « réponds UNIQUEMENT en JSON ».
+
+### Erreur 500 sur chaque appel · `llama-server binary not found`
+
+Tu as installé Ollama avec la **formule** `brew install ollama` (cassée). Désinstalle-la (`brew uninstall ollama`) et pose l'**app** : `brew install --cask ollama`, puis relance le serveur.
+
+### Tous les verdicts finissent en `peut-être`
+
+Le modèle ne respecte pas le vocabulaire (il répond « Analyser », « Oui »…) et ton parsing rabat tout en `peut-être`. Rends le prompt strict : « le verdict est EXACTEMENT l'un de ces trois mots : produire, ignorer, peut-être ».
 
 ### Port 11434 inaccessible
 
