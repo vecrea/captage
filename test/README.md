@@ -26,7 +26,7 @@ interrogé **dans le conteneur** `reservoir` (`docker exec`), donc aucun client
 C'est la **spec exécutable** du parcours : si un changement du guide casse une
 preuve, le script le voit.
 
-## Palier 2 · run agent dans un Linux éphémère (à venir)
+## Palier 2 · run agent dans un Linux éphémère (livré)
 
 C'est ici que vit le « Linux virtuel ». On ne le fait **pas** sur ta machine : on
 démarre un **Linux jetable** où un agent joue le lecteur **+** Claude Code, déroule
@@ -45,6 +45,24 @@ et cette traduction **révèle déjà** les endroits où le guide est trop Mac-c
 On teste que « suivre le guide **produit** un système qui marche », pas qu'il
 produit un code identique : les assertions portent sur le **comportement**, pas
 sur les lignes.
+
+**C'est implémenté** dans :
+- `.github/workflows/conformance.yml` · le workflow GitHub Actions, déclenché **à
+  la main** (`workflow_dispatch`) pour ne pas facturer à chaque commit.
+- `test/agent-build.sh` · le driver : prépare le Linux (uv, ollama + petit modèle,
+  claude code), lance l'agent qui construit les étapes 3→9, puis `conformance.sh`.
+
+Pour le lancer :
+1. Ajoute le secret repo **`ANTHROPIC_API_KEY`** (Settings → Secrets → Actions).
+   ⚠️ la CI utilise une **clé API facturée au token**, contrairement au parcours
+   élève qui tourne sur l'abonnement Pro/Max.
+2. Onglet **Actions → « conformance (palier 2) » → Run workflow**.
+3. Le rapport `conformance-report.txt` sort en artefact.
+
+Notes honnêtes · l'agent peut écrire un code un peu différent à chaque run (voulu,
+on teste le comportement) · Ollama tourne sur CPU en CI, d'où un **petit modèle**
+par défaut (`gemma3:1b`) · les étapes 1-2 (repo cloné, bootstrap) ressortent rouges
+en CI, c'est attendu (on valide le cœur 3→9).
 
 ## Palier 3 · pleine fidélité (à venir)
 

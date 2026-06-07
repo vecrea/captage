@@ -1,0 +1,51 @@
+name: conformance (palier 2)
+
+# Rejoue le parcours de bout en bout dans un Linux jetable : un agent (Claude Code
+# headless) construit les étapes 3→9, puis test/conformance.sh vérifie chaque preuve.
+#
+# Déclenché À LA MAIN (workflow_dispatch) pour ne pas facturer à chaque commit.
+# Requiert le secret repo ANTHROPIC_API_KEY (la CI utilise une clé API = facturée au
+# token, contrairement au parcours élève qui utilise l'abonnement Pro/Max).
+
+on:
+  workflow_dispatch:
+    inputs:
+      modele:
+        description: "Modèle Ollama (petit = rapide en CI)"
+        default: "gemma3:1b"
+
+permissions:
+  contents: read
+
+jobs:
+  rejouer-le-parcours:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OLLAMA_MODEL: ${{ github.event.inputs.modele || 'gemma3:1b' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Outils (uv · ollama · claude code)
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          curl -fsSL https://ollama.com/install.sh | sh
+          curl -fsSL https://claude.ai/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Démarrer Ollama + tirer le modèle
+        run: |
+          ollama serve &
+          for i in $(seq 1 30); do curl -fsS localhost:11434/ >/dev/null 2>&1 && break; sleep 2; done
+          ollama pull "$OLLAMA_MODEL"
+
+      - name: Un agent construit le parcours, puis on vérifie
+        run: bash test/agent-build.sh
+
+      - name: Rapport de conformité
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: conformance-report
+          path: conformance-report.txt
