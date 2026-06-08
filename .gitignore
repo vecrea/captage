@@ -22,6 +22,9 @@ node_modules/
 reservoir_data/
 *.log
 
+# Sortie de test (artefact, pas de la source)
+conformance-report.txt
+
 # Éditeurs
 .vscode/
 .idea/
